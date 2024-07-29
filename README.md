@@ -46,3 +46,14 @@ https://github.com/PaddlePaddle/PaddleOCR/blob/main/doc/doc_en/quickstart_en.md
 For its CUDA (Windows):
 
 https://www.paddlepaddle.org.cn/en/install/quick?docurl=/documentation/docs/en/install/pip/windows-pip_en.html
+
+## How It Works
+Diagram:
+
+![Picture of diagram](/diagram1.png?raw=True)
+
+version 1:
+![Picture of car license plate](/screenshot1.png?raw=True)
+version 2:
+![Picture of car license plate](/screenshot2.png?raw=True)
+
