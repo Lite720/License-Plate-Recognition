@@ -4,21 +4,42 @@ from statistics import mode
 ## DECISION METER
 
 class Dmeter:
-    def __init__(self) -> None:
+    """
+        Uses a mode algorithm to sort the best outcome from OCR.
+        Args: 
+            None
+    """    
+    def __init__(self) -> None:        
         self.best : str = None
         self.batch : list[str] = []
         pass
     
     def new(self):
+        """Refreshes the Dmeter.batch
+        """
         print('!! NEW !!')
         self.batch = []
     
     def sublist(string : str):
+        """Creates a string into sublist of list
+        according to set the rule:
+        list[0]: alpha
+        list[1]: digit
+        list[2]: alpha
+        Args:
+            string (str): len(string) should be >2
+
+        Returns:
+            list[[str]]: _description_
+        """
         l_main = []
         l_sub = []
         toggleA= False
         toggleD= False
 
+        # This set of instruction seperates the alphabetical and numerical chars
+        # result [['A','B'],['1','2','3','4'],['X','Y','Z']]
+        
         for char in string:
             if char.isalpha():
                 toggleA = True
@@ -40,8 +61,17 @@ class Dmeter:
         return l_main
 
     def add(self, string : str , as_checker=False):
-        
-        ## simple plate check
+        """Perform checks if string is usable, then adds to Dmeter.batch
+
+        Args:
+            string (str): String that should be added
+            as_checker (bool, optional): Used if string doesn't want to be added to Dmeter.batch.
+                                        Defaults to False.
+
+        Returns:
+            None
+        """
+        ## this series of statements are regulated for the purpose of license plates.
         if string == None: return f'String is not possible'
         string = string.replace(" ",'')
         if len(string) <3 : return f'String is too short'
@@ -64,7 +94,12 @@ class Dmeter:
         return f'Successfully appended {string}'
 
     def calculate(self):
-        if len(self.batch) == 0: return f'No str in batch💀'
+        """Mode algoritm that conforms to specific license plate.
+        Takes in Dmeter.batch as main argument. And returns to Dmeter.best
+        Mainly tailored to Indonesian license plate.
+        """
+                
+        if len(self.batch) == 0: return f'No str in batch'
         
         bestbg = []
         bestdig = []
@@ -111,7 +146,12 @@ class Dmeter:
         
         self.best = f'{str(bestbg[0])} {str(bestdig[0])} {str(bestlast[0])}'
         
-        # C to G hack.
+        
+        # There are possible unwanted outcomes when it comes to OCR
+        # to change the result directly you can use this hack
+        # replace directly from the resulting calculation of Dmeter.best
+        
+        # C to G hack 👇
         enable_replace_hack = True
         i_replace = 1
         replace_from = 'C'
@@ -131,25 +171,20 @@ class Dmeter:
             self.best = temp_best
         
         #self.best = str(bestbg[0])+str(bestdig[0])+str(bestlast[0])
-
-
-
+        
 """
+# Creates new meter.
+    # meter.new()
+# Adds new string that can be compared to the one before.
+    # meter.add()
+# Compares the result string of before, and the ones before that. 
+    # meter.calculate()
 
+    - EXAMPLE USE -
 meter = Dmeter()
-
 meter.add('BA 1231 XO')
 meter.add('BA 1231 X')
 meter.add('BA 1231 X')
- 
 meter.calculate()
 print(meter.best)
 """
-# Creates new meter.
-# meter.new()
-
-# Adds new string that can be compared to the one before.
-# meter.add()
-
-# Compares the result string of before, and the ones before that. 
-# meter.calculate()
